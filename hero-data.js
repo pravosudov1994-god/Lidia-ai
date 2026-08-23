@@ -1,0 +1,1 @@
+(() => { const parts = window.__LIDIA_HERO_PARTS || []; if (parts.length !== 5 || parts.some(p => !p)) return; const src = 'data:image/webp;base64,' + parts.join(''); document.querySelectorAll('[data-lidia-hero]').forEach(img => { img.src = src; }); })();
