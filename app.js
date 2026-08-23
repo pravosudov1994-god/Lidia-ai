@@ -1,4 +1,15 @@
 (() => {
+  // Cloudflare fallback for the main Lydia image.
+  // First try the local static asset; if Cloudflare does not expose it on this route,
+  // fall back to the public GitHub copy so the hero image always appears.
+  const lidiaImageUrl = 'https://raw.githubusercontent.com/pravosudov1994-god/Lidia-ai/main/assets/lidia-hero.webp';
+  document.querySelectorAll('img[src$="lidia-hero.webp"]').forEach(img => {
+    img.addEventListener('error', () => {
+      if (img.src !== lidiaImageUrl) img.src = lidiaImageUrl;
+    }, { once: true });
+    img.src = '/assets/lidia-hero.webp';
+  });
+
   const menuBtn = document.getElementById('menuBtn');
   const mobileMenu = document.getElementById('mobileMenu');
 
