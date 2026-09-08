@@ -1,0 +1,40 @@
+name: ARDENE preview assets
+
+on:
+  push:
+    branches: [ardene-preview]
+
+permissions:
+  contents: write
+
+jobs:
+  fetch:
+    if: ${{ !contains(github.event.head_commit.message, '[skip ci]') }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: ardene-preview
+      - name: Fetch firestorage share page
+        run: |
+          mkdir -p ardene-debug
+          curl -L --fail --retry 3 -A 'Mozilla/5.0' 'https://firestorage.ai/ja/f/jkkHmfVG3oSm' -o ardene-debug/share.html
+          python - <<'PY'
+          import re, html
+          s=open('ardene-debug/share.html',encoding='utf-8',errors='replace').read()
+          urls=[]
+          for pat in [r'href=["\']([^"\']+)', r'src=["\']([^"\']+)', r'https?://[^"\'<> ]+']:
+              urls += re.findall(pat,s)
+          with open('ardene-debug/links.txt','w') as f:
+              for u in dict.fromkeys(urls):
+                  f.write(html.unescape(u)+'\n')
+          print('bytes',len(s))
+          print('\n'.join(list(dict.fromkeys(urls))[:100]))
+          PY
+      - name: Commit debug output
+        run: |
+          git config user.name 'github-actions[bot]'
+          git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          git add ardene-debug
+          git commit -m 'Fetch firestorage share page [skip ci]' || exit 0
+          git push origin HEAD:ardene-preview
