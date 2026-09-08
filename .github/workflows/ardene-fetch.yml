@@ -15,50 +15,41 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ardene-preview
-      - name: Fetch original PNG files from firestorage
+      - name: Replace slide 2 with approved original PNG
         run: |
           set -euo pipefail
           mkdir -p ardene-site ardene-debug
-          API='https://api.firestorage.ai/dev/file/shares/jkkHmfVG3oSm'
-          curl -fsSL --retry 3 "$API/files?maxResults=1000" -o ardene-debug/metadata.json
-          python - <<'PY'
-          import json, pathlib
-          meta=json.loads(pathlib.Path('ardene-debug/metadata.json').read_text())
-          files=meta.get('files',[])
+          API='https://api.firestorage.ai/dev/file/shares/LCGzcmXMrGSM'
+          curl -fsSL --retry 3 "$API/files?maxResults=1000" -o ardene-debug/slide2-metadata.json
+          FILE_ID=$(python - <<'PY'
+          import json
+          d=json.load(open('ardene-debug/slide2-metadata.json'))
+          files=d.get('files',[])
+          target='ARDENE_slide_02_brand_intro_1080x1920.png'
           for f in files:
-              print(f.get('fileId'), f.get('fileName'), f.get('sizeBytes'), f.get('contentType'))
-          wanted={
-              'ARDENE_slide_01_cover_1080x1920.png':'slide-01.png',
-              'ARDENE_slide_02_brand_intro_1080x1920.png':'slide-02.png',
-          }
-          found={f.get('fileName'):f for f in files}
-          missing=[n for n in wanted if n not in found]
-          if missing:
-              raise SystemExit('Missing expected files: '+', '.join(missing))
-          pathlib.Path('ardene-debug/file-map.tsv').write_text('\n'.join(f"{found[name]['fileId']}\t{name}\t{dest}" for name,dest in wanted.items())+'\n')
+              if f.get('fileName')==target:
+                  print(f['fileId'])
+                  break
+          else:
+              raise SystemExit('approved slide 2 not found')
           PY
-          while IFS=$'\t' read -r FILE_ID FILE_NAME DEST; do
-            curl -fsSL --retry 3 -X POST "$API/files/$FILE_ID/download" -o ardene-debug/download.json
-            URL=$(python -c "import json; print(json.load(open('ardene-debug/download.json'))['downloadUrl'])")
-            curl -fsSL --retry 3 "$URL" -o "ardene-site/$DEST"
-            echo "$FILE_NAME -> $DEST ($(wc -c < "ardene-site/$DEST") bytes)"
-          done < ardene-debug/file-map.tsv
+          )
+          curl -fsSL --retry 3 -X POST "$API/files/$FILE_ID/download" -o ardene-debug/slide2-download.json
+          URL=$(python -c "import json; print(json.load(open('ardene-debug/slide2-download.json'))['downloadUrl'])")
+          curl -fsSL --retry 3 "$URL" -o ardene-site/slide-02.png
           python - <<'PY'
-          import struct, pathlib
-          for name in ['slide-01.png','slide-02.png']:
-              p=pathlib.Path('ardene-site')/name
-              b=p.read_bytes()
-              if b[:8] != b'\x89PNG\r\n\x1a\n':
-                  raise SystemExit(f'{name}: not a PNG')
-              w,h=struct.unpack('>II',b[16:24])
-              print(name, len(b), w, h)
-              if (w,h)!=(1080,1920):
-                  raise SystemExit(f'{name}: unexpected dimensions {w}x{h}')
+          import struct, pathlib, hashlib
+          p=pathlib.Path('ardene-site/slide-02.png')
+          b=p.read_bytes()
+          if b[:8] != b'\x89PNG\r\n\x1a\n': raise SystemExit('not PNG')
+          w,h=struct.unpack('>II',b[16:24])
+          print('slide-02.png',len(b),w,h,hashlib.sha256(b).hexdigest())
+          if (w,h)!=(1080,1920): raise SystemExit(f'unexpected {w}x{h}')
           PY
-      - name: Commit original assets
+      - name: Commit corrected slide 2
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
-          git add ardene-site ardene-debug/metadata.json ardene-debug/file-map.tsv
-          git commit -m 'Add original ARDENE PNG assets [skip ci]' || exit 0
+          git add ardene-site/slide-02.png ardene-debug/slide2-metadata.json
+          git commit -m 'Replace ARDENE slide 2 with approved version [skip ci]' || exit 0
           git push origin HEAD:ardene-preview
