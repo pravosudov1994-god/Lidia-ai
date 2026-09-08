@@ -15,44 +15,47 @@ jobs:
       - uses: actions/checkout@v4
         with:
           ref: ardene-preview
-      - name: Inspect firestorage share route
+      - name: Inspect firestorage application chunks
         run: |
-          mkdir -p ardene-debug
+          mkdir -p ardene-debug/chunks
+          base='https://firestorage.ai/_next/static/chunks'
           curl -L --fail --retry 3 -A 'Mozilla/5.0' 'https://firestorage.ai/ja/f/jkkHmfVG3oSm' -o ardene-debug/share.html
-          curl -L --fail --retry 3 -A 'Mozilla/5.0' 'https://firestorage.ai/_next/static/chunks/app/(files)/ja/f/page-4d19ae0a4ce39d79.js' -o ardene-debug/page.js
+          curl -L --fail --retry 3 "$base/4899-d89df949f2dbd5af.js" -o ardene-debug/chunks/4899.js
+          curl -L --fail --retry 3 "$base/8500-f4d7bfbe7500f274.js" -o ardene-debug/chunks/8500.js
+          curl -L --fail --retry 3 "$base/8437-d65cc193dc908afa.js" -o ardene-debug/chunks/8437.js
+          curl -L --fail --retry 3 "$base/5841-1160578ba9bb4f3e.js" -o ardene-debug/chunks/5841.js
+          curl -L --fail --retry 3 "$base/3794-56f19dc9e2f95fcd.js" -o ardene-debug/chunks/3794.js
+          curl -L --fail --retry 3 "$base/webpack-276504efae57521f.js" -o ardene-debug/chunks/webpack.js
           python - <<'PY'
-          import re, html
+          import re
           from pathlib import Path
 
-          share = Path('ardene-debug/share.html').read_text(encoding='utf-8', errors='replace')
-          js = Path('ardene-debug/page.js').read_text(encoding='utf-8', errors='replace')
-
-          urls=[]
-          for text in (share, js):
-              for pat in [r'href=["\']([^"\']+)', r'src=["\']([^"\']+)', r'https?://[^"\'<> )]+']:
-                  urls += re.findall(pat, text)
-
-          candidates=[]
-          patterns = [
-              r'[^"\']{0,120}/api/[^"\']{0,220}',
-              r'[^"\']{0,120}download[^"\']{0,220}',
-              r'[^"\']{0,120}share[^"\']{0,220}',
-              r'[^"\']{0,120}file[^"\']{0,220}',
-              r'fetch\([^)]{0,400}\)',
-          ]
-          for pat in patterns:
-              for m in re.finditer(pat, js, flags=re.I):
-                  candidates.append(m.group(0))
-
-          Path('ardene-debug/links.txt').write_text('\n'.join(dict.fromkeys(html.unescape(u) for u in urls)), encoding='utf-8')
-          Path('ardene-debug/candidates.txt').write_text('\n\n'.join(dict.fromkeys(candidates)), encoding='utf-8')
-          print('share bytes', len(share), 'js bytes', len(js), 'candidates', len(candidates))
-          print('\n\n'.join(candidates[:80]))
+          files=list(Path('ardene-debug/chunks').glob('*.js'))
+          out=[]
+          for p in files:
+              s=p.read_text(encoding='utf-8', errors='replace')
+              out.append(f'### {p.name} bytes={len(s)}')
+              pats=[
+                  r'["\'][^"\']*(?:api|download|share|file|object|storage)[^"\']*["\']',
+                  r'fetch\([^)]{0,500}\)',
+                  r'axios[^,;)]{0,500}',
+                  r'https?://[^"\'<> )]+',
+              ]
+              vals=[]
+              for pat in pats:
+                  vals += re.findall(pat,s,flags=re.I)
+              seen=set()
+              for v in vals:
+                  if isinstance(v,tuple): v=' '.join(v)
+                  if v not in seen:
+                      seen.add(v); out.append(v)
+          Path('ardene-debug/chunk-candidates.txt').write_text('\n'.join(out),encoding='utf-8')
+          print('\n'.join(out[:300]))
           PY
       - name: Commit debug output
         run: |
           git config user.name 'github-actions[bot]'
           git config user.email '41898282+github-actions[bot]@users.noreply.github.com'
           git add ardene-debug
-          git commit -m 'Inspect firestorage share API [skip ci]' || exit 0
+          git commit -m 'Inspect firestorage chunks [skip ci]' || exit 0
           git push origin HEAD:ardene-preview
