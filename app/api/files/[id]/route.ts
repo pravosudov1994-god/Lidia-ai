@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { verifyFileAccess } from "../../../../lib/file-access";
 
 function cleanName(value: string | null) {
   return (value || "file").replace(/[\r\n\0]/g, "").slice(0, 180) || "file";
@@ -20,10 +21,12 @@ export async function GET(
 
   const { id } = await context.params;
   const url = new URL(request.url);
+  if (!verifyFileAccess(id, "read", url.searchParams.get("e"), url.searchParams.get("s"))) return NextResponse.json({ error: "Нет доступа к файлу или ссылка устарела." }, { status: 403 });
   const name = cleanName(url.searchParams.get("name"));
-  const mimeType = url.searchParams.get("type") || "application/octet-stream";
+  const requestedType = url.searchParams.get("type") || "";
+  const mimeType = ["image/png", "image/jpeg", "image/webp", "image/gif"].includes(requestedType) ? requestedType : "application/octet-stream";
   const disposition =
-    url.searchParams.get("disposition") === "inline" ? "inline" : "attachment";
+    mimeType.startsWith("image/") && url.searchParams.get("disposition") === "inline" ? "inline" : "attachment";
 
   try {
     const upstream = await fetch(
@@ -47,7 +50,7 @@ export async function GET(
       headers: {
         "Content-Type": mimeType,
         "Content-Disposition": encodedDisposition(name, disposition),
-        "Cache-Control": "private, max-age=3600",
+        "Cache-Control": "private, no-store",
         "X-Content-Type-Options": "nosniff",
       },
     });
@@ -68,6 +71,8 @@ export async function DELETE(
   }
 
   const { id } = await context.params;
+  const url = new URL(_request.url);
+  if (!verifyFileAccess(id, "delete", url.searchParams.get("e"), url.searchParams.get("s"))) return NextResponse.json({ error: "Нет доступа к файлу или ссылка устарела." }, { status: 403 });
 
   try {
     const upstream = await fetch(

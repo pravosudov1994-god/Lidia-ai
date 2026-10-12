@@ -42,7 +42,7 @@ const initialMessages: Message[] = [
   {
     role: "assistant",
     content:
-      "Здравствуйте! Я Motin AI — Ваш AI-маркетолог. Давайте сделаем быстрый разбор бизнеса и найдём точки роста.\n\nВы можете прикреплять фотографии товаров и презентации PowerPoint. Я умею бесплатно анализировать изображения через Cloudflare AI, создавать новые визуалы, читать PPTX и собирать новые презентации для скачивания.\n\nДля начала расскажите, пожалуйста: чем занимается Ваш бизнес и в каком городе или регионе Вы работаете?",
+      "Здравствуйте! Я Motin AI — Ваш AI-маркетолог. Давайте сделаем быстрый разбор бизнеса и найдём точки роста.\n\nВы можете прикреплять фотографии товаров и презентации PowerPoint. Я могу анализировать изображения через Cloudflare AI, создавать новые визуалы, читать PPTX и собирать новые презентации для скачивания.\n\nДля начала расскажите, пожалуйста: чем занимается Ваш бизнес и в каком городе или регионе Вы работаете?",
   },
 ];
 
@@ -430,7 +430,17 @@ export default function ChatPage() {
           headers: {
             "Content-Type": "application/json",
           },
-          body: JSON.stringify({ messages: conversation }),
+          body: JSON.stringify({ messages: conversation.map((message) => ({
+              role: message.role,
+              content: message.content,
+              attachments: message.attachments?.map((attachment) => ({
+                id: attachment.id, name: attachment.name, mimeType: attachment.mimeType,
+                size: attachment.size, kind: attachment.kind,
+                analyzable: attachment.analyzable && !attachment.local && !attachment.generated,
+                accessExpires: attachment.accessExpires,
+                accessSignature: attachment.accessSignature,
+              })),
+            })) }),
         });
 
         const data = (await response.json()) as {

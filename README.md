@@ -20,14 +20,14 @@
 - Используется OpenNext адаптер с wrangler.jsonc (имя Worker: motin-ai).
 - npm run preview — локальная проверка Worker runtime.
 - npm run deploy — публикация **только после проверки на тестовом адресе**.
-- В Cloudflare Dashboard настроить Runtime variables and secrets: OPENAI_API_KEY, CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_AI_TOKEN, LEADS_TELEGRAM_BOT_TOKEN, LEADS_TELEGRAM_CHAT_ID.
+- В Cloudflare Dashboard настроить Runtime variables and secrets: OPENAI_API_KEY, CLOUDFLARE_ACCOUNT_ID, CLOUDFLARE_AI_TOKEN, LEADS_TELEGRAM_BOT_TOKEN, LEADS_TELEGRAM_CHAT_ID, FILE_LINK_SECRET (случайное значение 32+ символов).
 - Не добавлять секреты в GitHub и не выводить их в логи.
 - Перед окончательной публикацией проверить доступность motin-ai.pravosudov1994.workers.dev: имя Worker и поддомен аккаунта определяют фактический адрес.
 - Старые адреса перенаправлять только после проверки всех функций и согласования.
 - Фото /motin-hero.svg является временной стилизованной иллюстрацией; замените на созданный реалистичный portrait /public/motin-hero.webp после утверждения.
 
 ## Важные блокеры перед публичным запуском
-- Добавить авторизацию / безопасные подписанные ссылки для /api/files/[id], иначе URL доступа и удаления файла недостаточно защищены.
+- Для /api/files/[id] включены подписанные ссылки с ограниченным временем действия. Перед запуском установить FILE_LINK_SECRET и проверить скачивание/удаление; для персональных кабинетов дополнительно потребуется полноценная авторизация.
 - Защитить платные AI-эндпоинты: Cloudflare Turnstile, rate limiting, квоты, обработка ошибок и логирование без персональных данных.
 - Протестировать реальные OpenAI/Cloudflare токены, генерацию и скачивание PPTX, обработку файлов, мобильную клавиатуру.
 - Проверить Next.js/OpenNext build и Worker preview на корректность всех API-обработчиков.

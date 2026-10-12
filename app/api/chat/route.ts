@@ -109,7 +109,7 @@ function buildInput(messages: ChatMessage[]) {
     }
 
     const attachments = message.attachments ?? [];
-    const unsupported = attachments.filter((attachment) => !attachment.analyzable);
+    const unsupported = attachments.filter((attachment) => !attachment.analyzable || attachment.id.startsWith("local-") || attachment.id.startsWith("generated-"));
     const text = [
       message.content || "Пользователь отправил вложения без дополнительного текста.",
       unsupported.length
@@ -125,7 +125,7 @@ function buildInput(messages: ChatMessage[]) {
     ];
 
     for (const attachment of attachments) {
-      if (!attachment.analyzable) continue;
+      if (!attachment.analyzable || attachment.id.startsWith("local-") || attachment.id.startsWith("generated-")) continue;
 
       if (attachment.kind === "image") {
         content.push({
@@ -157,6 +157,8 @@ export async function POST(request: Request) {
       { status: 503 },
     );
   }
+
+  if (Number(request.headers.get("content-length") || 0) > 128_000) return NextResponse.json({ error: "Слишком большой запрос." }, { status: 413 });
 
   let body: unknown;
 
@@ -244,7 +246,7 @@ export async function POST(request: Request) {
 
     if (!reply) {
       return NextResponse.json(
-        { error: "Motin AI не получила текстовый ответ. Попробуйте ещё раз." },
+        { error: "Motin AI не получил текстовый ответ. Попробуйте ещё раз." },
         { status: 502 },
       );
     }
