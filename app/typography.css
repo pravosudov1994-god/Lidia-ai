@@ -1,0 +1,443 @@
+/*
+ * MOTIN AI / TYPE SYSTEM
+ * Manrope for Cyrillic-first product UI, Cormorant Garamond for editorial
+ * accents only. This file loads last, giving every route the same hierarchy.
+ */
+:root {
+  --font-sans: "Manrope", "Avenir Next", "Segoe UI", Arial, sans-serif;
+  --font-editorial: "Cormorant Garamond", "Palatino Linotype", Georgia, serif;
+  --type-small: 0.75rem;
+  --type-ui: 0.875rem;
+  --type-body: 0.9375rem;
+  --type-lead: 1.0625rem;
+  --type-label-spacing: 0.17em;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+  text-size-adjust: 100%;
+  font-size: 16px;
+}
+
+body {
+  font-family: var(--font-sans);
+  font-size: var(--type-body);
+  font-weight: 400;
+  line-height: 1.65;
+  letter-spacing: -0.014em;
+  font-kerning: normal;
+  font-feature-settings: "kern" 1, "liga" 1;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+}
+
+button, input, textarea, select {
+  font-family: inherit;
+  letter-spacing: inherit;
+}
+
+button, a.button, input, textarea, select {
+  -webkit-tap-highlight-color: transparent;
+}
+
+h1, h2, h3, h4, h5, h6 {
+  font-family: var(--font-sans);
+  text-wrap: balance;
+}
+
+.motin-page p {
+  text-wrap: pretty;
+}
+
+/* Identity & navigation: a single, recognizable weight and tracking system. */
+.brand,
+.brand-wordmark,
+.footer-brand {
+  font-family: var(--font-sans);
+  font-weight: 800;
+  letter-spacing: 0.075em;
+}
+
+.brand-wordmark {
+  font-size: 1.125rem;
+  line-height: 1.1;
+}
+
+.brand-mark span,
+.chat-page .brand-mark span {
+  font-family: var(--font-sans);
+  font-size: 1rem;
+  font-weight: 800;
+  line-height: 1;
+}
+
+.nav {
+  font-family: var(--font-sans);
+  font-size: 0.835rem;
+  font-weight: 500;
+  letter-spacing: 0.002em;
+}
+
+.button,
+.chat-submit,
+.send-pill {
+  font-family: var(--font-sans);
+  font-size: 0.835rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: 0.006em;
+}
+
+.button-large {
+  font-size: 0.875rem;
+}
+
+.overline,
+.section-kicker,
+.panel-kicker,
+.plan-name,
+.plan-tag,
+.art-topline,
+.hero-rail {
+  font-family: var(--font-sans);
+  font-weight: 700;
+  letter-spacing: var(--type-label-spacing);
+  text-transform: uppercase;
+}
+
+.overline,
+.section-kicker,
+.panel-kicker {
+  font-size: 0.69rem;
+  line-height: 1.5;
+}
+
+.hero-rail,
+.art-topline {
+  font-size: 0.675rem;
+}
+
+.plan-name {
+  font-size: 0.75rem;
+  letter-spacing: 0.115em;
+}
+
+.plan-tag {
+  font-size: 0.635rem;
+  letter-spacing: 0.09em;
+}
+
+/* Main editorial hierarchy: disciplined sans, with one intentional serif. */
+.motin-hero h1 {
+  font-family: var(--font-sans);
+  font-size: clamp(3.25rem, 5.4vw, 5.9rem);
+  font-weight: 600;
+  line-height: 1.075;
+  letter-spacing: -0.06em;
+  text-wrap: balance;
+}
+
+.motin-page h2 {
+  font-family: var(--font-sans);
+  font-size: clamp(2.65rem, 4.25vw, 4.05rem);
+  font-weight: 600;
+  line-height: 1.12;
+  letter-spacing: -0.052em;
+}
+
+.motin-page em {
+  font-family: var(--font-editorial);
+  font-size: 1.15em;
+  font-style: italic;
+  font-weight: 500;
+  letter-spacing: -0.03em;
+  line-height: 0.9;
+}
+
+.hero-subtitle,
+.leadgen-intro {
+  font-family: var(--font-sans);
+  font-size: var(--type-lead);
+  font-weight: 400;
+  line-height: 1.85;
+  letter-spacing: -0.012em;
+}
+
+.section-heading-row > p,
+.final-inner p {
+  font-size: var(--type-body);
+  line-height: 1.85;
+}
+
+.hero-trust,
+.art-label small,
+.footer-brand small {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.art-label-mark,
+.motin-steps .step-number,
+.plan-count {
+  font-family: var(--font-editorial);
+  font-weight: 500;
+  font-variant-numeric: lining-nums;
+}
+
+.art-label-mark {
+  font-size: 1.75rem;
+}
+
+.motin-steps .step-number {
+  font-size: 2.25rem;
+  line-height: 1;
+  letter-spacing: -0.025em;
+}
+
+.art-label strong {
+  font-size: 0.7rem;
+  font-weight: 800;
+  letter-spacing: 0.13em;
+}
+
+/* Cards, lists, form and pricing: consistent sizes, no 10px body copy. */
+.motin-feature h3,
+.motin-steps h3 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  line-height: 1.35;
+  letter-spacing: -0.025em;
+}
+
+.motin-feature p,
+.motin-steps p,
+.motin-plan p,
+.leadgen-points span,
+.leadgen-panel > p {
+  font-size: 0.875rem;
+  font-weight: 400;
+  line-height: 1.78;
+}
+
+.feature-number,
+.subtle-link,
+.leadgen-test-note {
+  font-size: var(--type-small);
+  line-height: 1.6;
+}
+
+.leadgen-panel h3 {
+  font-family: var(--font-sans);
+  font-size: clamp(1.65rem, 2.4vw, 2.05rem);
+  font-weight: 650;
+  line-height: 1.2;
+  letter-spacing: -0.04em;
+}
+
+.lead-form label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+}
+
+.lead-form input,
+.lead-form textarea {
+  font-size: 1rem; /* avoids unexpected iOS input zoom */
+  line-height: 1.55;
+  font-weight: 400;
+  letter-spacing: 0;
+}
+
+.lead-form-status {
+  font-size: var(--type-small);
+}
+
+.plan-count {
+  font-size: clamp(4.6rem, 5.8vw, 5.55rem);
+  line-height: 0.92;
+  letter-spacing: -0.065em;
+}
+
+.plan-count small {
+  font-family: var(--font-sans);
+  font-size: 0.875rem;
+  font-weight: 500;
+  letter-spacing: 0;
+}
+
+.plan-price {
+  font-family: var(--font-sans);
+  font-size: 1.425rem;
+  font-weight: 650;
+  letter-spacing: -0.035em;
+  font-variant-numeric: tabular-nums lining-nums;
+}
+
+.motin-footer .footer-inner {
+  font-size: 0.75rem;
+  line-height: 1.65;
+}
+
+/* Chat inherits exactly the same font, with readable conversational rhythm. */
+.chat-page,
+.chat-panel,
+.chat-form,
+.chat-compose {
+  font-family: var(--font-sans);
+}
+
+.ai-name {
+  font-family: var(--font-sans);
+  font-size: 0.9375rem;
+  font-weight: 750;
+  letter-spacing: -0.02em;
+}
+
+.ai-role,
+.online {
+  font-size: 0.75rem;
+  line-height: 1.5;
+  letter-spacing: 0;
+}
+
+.back-link {
+  font-size: 0.8125rem;
+  font-weight: 600;
+}
+
+.chat-capabilities span {
+  font-size: 0.725rem;
+  line-height: 1.4;
+  font-weight: 500;
+}
+
+.chat-bubble {
+  font-family: var(--font-sans);
+  font-size: 0.9rem;
+  font-weight: 400;
+  line-height: 1.75;
+  letter-spacing: -0.006em;
+  overflow-wrap: anywhere;
+}
+
+.chat-message-row.user .chat-bubble {
+  color: #0b1016;
+  font-weight: 550;
+}
+
+.suggestion-button {
+  font-family: var(--font-sans);
+  font-size: 0.775rem;
+  font-weight: 500;
+  line-height: 1.4;
+  letter-spacing: 0;
+}
+
+.chat-form textarea {
+  font-size: 1rem; /* no iPhone auto-zoom while composing */
+  line-height: 1.6;
+  letter-spacing: 0;
+}
+
+.attach-button,
+.image-action-button,
+.presentation-action-button {
+  font-family: var(--font-sans);
+  font-size: 0.735rem;
+  font-weight: 650;
+  line-height: 1.35;
+}
+
+.attachment-info strong,
+.pending-attachment strong {
+  font-size: 0.78rem;
+  font-weight: 650;
+}
+
+.attachment-info span,
+.pending-attachment span,
+.attachment-action {
+  font-size: 0.7rem;
+  line-height: 1.4;
+}
+
+.chat-error,
+.chat-file-note {
+  font-size: 0.73rem;
+  line-height: 1.6;
+}
+
+@media (max-width: 1000px) {
+  .motin-hero h1 {
+    font-size: clamp(3.1rem, 5.8vw, 4.8rem);
+  }
+}
+
+@media (max-width: 760px) {
+  .motin-hero h1 {
+    font-size: clamp(2.95rem, 9vw, 4rem);
+    line-height: 1.08;
+  }
+
+  .motin-page h2 {
+    font-size: clamp(2.25rem, 7.6vw, 3.1rem);
+    line-height: 1.12;
+  }
+
+  .hero-subtitle,
+  .leadgen-intro {
+    font-size: 1rem;
+    line-height: 1.8;
+  }
+
+  .motin-section {
+    padding-block: 4.5rem;
+  }
+
+  .motin-feature h3,
+  .motin-steps h3 {
+    font-size: 1.1rem;
+  }
+
+  .chat-bubble {
+    font-size: 0.875rem;
+    line-height: 1.7;
+  }
+}
+
+@media (max-width: 480px) {
+  .brand-wordmark {
+    font-size: 1.035rem;
+  }
+
+  .header-cta {
+    font-size: 0.72rem;
+    font-weight: 700;
+  }
+
+  .motin-hero h1 {
+    font-size: clamp(2.625rem, 10vw, 3.1rem);
+    letter-spacing: -0.057em;
+  }
+
+  .motin-page h2 {
+    font-size: clamp(2.17rem, 9.1vw, 2.65rem);
+  }
+
+  .motin-page em {
+    font-size: 1.125em;
+  }
+
+  .plan-count {
+    font-size: 5.1rem;
+  }
+
+  .chat-capabilities span {
+    font-size: 0.7rem;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html { scroll-behavior: auto; }
+}

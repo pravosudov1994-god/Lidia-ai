@@ -1,0 +1,36 @@
+{
+  "name": "motin-ai",
+  "main": ".open-next/worker.js",
+  "compatibility_date": "2026-10-12",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "assets": {
+    "directory": ".open-next/assets",
+    "binding": "ASSETS"
+  },
+  "observability": {
+    "enabled": true
+  },
+  "ai": {
+    "binding": "AI"
+  },
+  "ratelimits": [
+    {
+      "name": "MOTIN_AI_RATE_PER_CLIENT",
+      "namespace_id": "8170101",
+      "simple": {
+        "limit": 4,
+        "period": 60
+      }
+    },
+    {
+      "name": "MOTIN_AI_RATE_GLOBAL",
+      "namespace_id": "8170102",
+      "simple": {
+        "limit": 20,
+        "period": 60
+      }
+    }
+  ]
+}
