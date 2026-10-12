@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { aiRateLimit } from "../../../lib/ai-guard";
 import { MOTIN_SYSTEM_PROMPT } from "../../../lib/motin-prompt";
+import { replyWithWorkersAi } from "../../../lib/workers-chat";
 
 type ChatAttachment = {
   id: string;
@@ -154,13 +155,6 @@ export async function POST(request: Request) {
   if (limited) return limited;
   const apiKey = process.env.OPENAI_API_KEY;
 
-  if (!apiKey) {
-    return NextResponse.json(
-      { error: "AI пока не настроен. Добавьте OPENAI_API_KEY в переменные окружения." },
-      { status: 503 },
-    );
-  }
-
   if (Number(request.headers.get("content-length") || 0) > 128_000) return NextResponse.json({ error: "Слишком большой запрос." }, { status: 413 });
 
   let body: unknown;
@@ -206,6 +200,17 @@ export async function POST(request: Request) {
     return NextResponse.json(
       { error: "Диалог слишком длинный. Начните новый разбор." },
       { status: 413 },
+    );
+  }
+
+  if (!apiKey) {
+    return replyWithWorkersAi(
+      request,
+      messages.map((message) => ({
+        role: message.role,
+        content: message.content,
+        hasAttachments: Boolean(message.attachments?.length),
+      })),
     );
   }
 
