@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { aiRateLimit } from "../../../lib/ai-guard";
 import {
   cloudflareToMarkdown,
   dataUrlToBlob,
@@ -24,6 +25,8 @@ function isImageInput(value: unknown): value is ImageInput {
 }
 
 export async function POST(request: Request) {
+  const limited = aiRateLimit(request, "vision", 8);
+  if (limited) return limited;
   let body: unknown;
 
   try {

@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { aiRateLimit } from "../../../lib/ai-guard";
 import { MOTIN_SYSTEM_PROMPT } from "../../../lib/motin-prompt";
 
 type ChatAttachment = {
@@ -149,6 +150,8 @@ function buildInput(messages: ChatMessage[]) {
 }
 
 export async function POST(request: Request) {
+  const limited = aiRateLimit(request, "chat", 30);
+  if (limited) return limited;
   const apiKey = process.env.OPENAI_API_KEY;
 
   if (!apiKey) {

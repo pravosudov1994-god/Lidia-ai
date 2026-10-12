@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { aiRateLimit } from "../../../lib/ai-guard";
 
 const MAX_FILE_BYTES = 20 * 1024 * 1024;
 
@@ -57,6 +58,8 @@ function fileLinks(id: string, name: string, mimeType: string, isImage: boolean)
 }
 
 export async function POST(request: Request) {
+  const limited = aiRateLimit(request, "files", 10);
+  if (limited) return limited;
   const apiKey = process.env.OPENAI_API_KEY;
 
   if (!apiKey) {

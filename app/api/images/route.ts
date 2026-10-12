@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { aiRateLimit } from "../../../lib/ai-guard";
 import {
   arrayBufferToBase64,
   runCloudflareModel,
@@ -95,6 +96,8 @@ async function readCloudflareImage(response: Response) {
 }
 
 export async function POST(request: Request) {
+  const limited = aiRateLimit(request, "images", 5);
+  if (limited) return limited;
   let body: unknown;
 
   try {

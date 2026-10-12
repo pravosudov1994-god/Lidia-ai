@@ -1,4 +1,5 @@
 import { NextResponse } from "next/server";
+import { aiRateLimit } from "../../../lib/ai-guard";
 import { runCloudflareText } from "../../../lib/cloudflare-ai";
 
 type PresentationSlide = {
@@ -74,6 +75,8 @@ function extractJsonObject(text: string) {
 }
 
 export async function POST(request: Request) {
+  const limited = aiRateLimit(request, "presentations", 8);
+  if (limited) return limited;
   let body: unknown;
 
   try {
