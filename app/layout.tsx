@@ -3,6 +3,7 @@ import "./globals.css";
 import "./chat/chat-enhancements.css";
 import "./typography.css";
 import "./leadgen.css";
+import "./motion.css";
 
 export const metadata: Metadata = {
   icons: { icon: "/favicon.svg" },

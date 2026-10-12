@@ -1,5 +1,6 @@
 import Link from "next/link";
 import LeadForm from "../components/LeadForm";
+import MotionEnhancements from "../components/MotionEnhancements";
 
 type IconName = "search" | "target" | "inbox" | "headset" | "check" | "bolt" | "clock" | "chart" | "layers" | "shield" | "megaphone" | "monitor" | "users" | "grid" | "arrow" | "spark";
 
@@ -84,10 +85,11 @@ export default function HomePage() {
       </header>
 
       <section className="mg-hero" aria-labelledby="mg-hero-title">
+        <MotionEnhancements />
         <div className="mg-grid-overlay" aria-hidden="true"/>
         <div className="mg-hero-glow" aria-hidden="true"/>
         <div className="shell mg-hero-layout">
-          <div className="mg-hero-copy">
+          <div className="mg-hero-copy mg-hero-intro">
             <div className="mg-kicker"><span className="mg-kicker-dot"/> AI + BIG DATA + КОЛЛ-ЦЕНТР <span className="mg-kicker-line"/></div>
             <h1 id="mg-hero-title">Умная <em>лидогенерация</em> для вашего бизнеса</h1>
             <p className="mg-hero-desc">Анализируем нишу, запускаем привлечение, квалифицируем лидов и передаём вашему отделу продаж <strong>целевые заявки с подтверждённым интересом.</strong></p>
@@ -119,7 +121,7 @@ export default function HomePage() {
       </section>
 
       <section className="mg-ai-strip" id="ai-assistant" aria-labelledby="mg-ai-title">
-        <div className="shell mg-ai-layout">
+        <div className="shell mg-ai-layout mg-reveal">
           <div className="mg-ai-orb"><div className="mg-ai-orb-inner"><Icon name="spark" size={33}/></div><span>AI</span></div>
           <div className="mg-ai-copy">
             <span className="mg-overline">ДОПОЛНИТЕЛЬНЫЙ ИНСТРУМЕНТ</span>
@@ -132,26 +134,26 @@ export default function HomePage() {
 
       <section className="mg-section mg-how" id="how">
         <div className="shell">
-          <div className="mg-section-head">
+          <div className="mg-section-head mg-reveal">
             <span className="mg-overline">01 / ПРОЦЕСС</span>
             <h2>Как работает <em>Motin AI</em></h2>
             <p>Пять этапов — от анализа вашего рынка до квалифицированного лида в отделе продаж.</p>
           </div>
           <div className="mg-process-track">
-            {steps.map((step) => <article className="mg-process-card" key={step.number}>
+            {steps.map((step) => <article className="mg-process-card mg-reveal" key={step.number}>
               <span className="mg-process-num">{step.number}</span>
               <div className="mg-icon-box"><Icon name={step.icon} size={27}/></div>
               <h3>{step.title}</h3><p>{step.text}</p>
               <span className="mg-process-arrow" aria-hidden="true">→</span>
             </article>)}
           </div>
-          <div id="benefits" className="mg-section-head mg-benefit-head">
+          <div id="benefits" className="mg-section-head mg-benefit-head mg-reveal">
             <span className="mg-overline">02 / ПРЕИМУЩЕСТВА</span>
             <h2>Почему выбирают <em>Motin AI</em></h2>
             <p>Технологии помогают находить обращения. Люди помогают убедиться, что они действительно целевые.</p>
           </div>
           <div className="mg-benefit-grid">
-            {benefits.map((b) => <article className="mg-benefit-card" key={b.title}>
+            {benefits.map((b) => <article className="mg-benefit-card mg-reveal" key={b.title}>
               <div className="mg-icon-box"><Icon name={b.icon} size={25}/></div>
               <h3>{b.title}</h3><p>{b.text}</p>
             </article>)}
@@ -162,7 +164,7 @@ export default function HomePage() {
 
       <section className="mg-section mg-test" id="test">
         <div className="shell">
-          <div className="mg-test-panel">
+          <div className="mg-test-panel mg-reveal">
             <div className="mg-test-art" aria-hidden="true"><span className="mg-test-ring outer"/><span className="mg-test-ring inner"/><Icon name="clock" size={60}/></div>
             <span className="mg-pill">БЕСПЛАТНЫЙ ТЕСТ · 7 ДНЕЙ</span>
             <h2>Сначала <em>результат</em> —<br/>потом решение</h2>
@@ -181,13 +183,13 @@ export default function HomePage() {
 
       <section className="mg-section mg-pricing" id="pricing">
         <div className="shell">
-          <div className="mg-section-head">
+          <div className="mg-section-head mg-reveal">
             <span className="mg-overline">03 / ТАРИФЫ</span>
             <h2>Выберите <em>пакет лидов</em></h2>
             <p>Понятные пакеты для системной загрузки отдела продаж. Квалификация и передача заявок входят в каждый пакет.</p>
           </div>
           <div className="mg-pricing-grid">
-            {plans.map(plan => <article className={plan.featured ? "mg-price-card mg-price-featured" : "mg-price-card"} key={plan.count}>
+            {plans.map(plan => <article className={plan.featured ? "mg-price-card mg-price-featured mg-reveal" : "mg-price-card mg-reveal"} key={plan.count}>
               {plan.featured && <span className="mg-popular">ПОПУЛЯРНЫЙ ВЫБОР</span>}
               <div className="mg-price-top"><span className="mg-plan-name">{plan.type}</span><span className="mg-price-icon"><Icon name={plan.featured ? "target" : "chart"} size={31}/></span></div>
               <h3>{plan.count} <span>лидов</span></h3>
@@ -207,27 +209,27 @@ export default function HomePage() {
 
       <section className="mg-section mg-services" id="services">
         <div className="shell">
-          <div className="mg-section-head">
+          <div className="mg-section-head mg-reveal">
             <span className="mg-overline">04 / ЭКОСИСТЕМА MOTIN GROUP</span>
             <h2>Дополнительные <em>услуги</em></h2>
             <p>От привлечения клиентов до настройки бизнес-процессов и работы отдела продаж.</p>
           </div>
           <div className="mg-services-grid">
-            {services.map(s => <article className="mg-service" key={s.title}><div className="mg-icon-box"><Icon name={s.icon} size={25}/></div><h3>{s.title}</h3><p>{s.text}</p></article>)}
+            {services.map(s => <article className="mg-service mg-reveal" key={s.title}><div className="mg-icon-box"><Icon name={s.icon} size={25}/></div><h3>{s.title}</h3><p>{s.text}</p></article>)}
           </div>
         </div>
       </section>
 
       <section className="mg-section mg-final" id="lead-form">
         <div className="shell mg-final-layout">
-          <div className="mg-final-content">
+          <div className="mg-final-content mg-reveal">
             <span className="mg-overline">05 / ЗАПУСК</span>
             <h2>Готовы увеличить <em>поток клиентов?</em></h2>
             <p>Запустите бесплатный тест Motin AI и оцените качество лидов на своём направлении. Начнём с короткого разговора о вашей нише и задаче.</p>
             <div className="mg-final-points"><span><Icon name="check" size={18}/> Целевые заявки</span><span><Icon name="check" size={18}/> Квалификация</span><span><Icon name="check" size={18}/> Без предоплаты за тест</span></div>
             <div className="mg-final-line"><span>AI + BIG DATA</span><span>×</span><span>ЛЮДИ И ЭКСПЕРТИЗА</span></div>
           </div>
-          <aside className="mg-form-card" aria-labelledby="mg-form-title">
+          <aside className="mg-form-card mg-reveal" aria-labelledby="mg-form-title">
             <div className="mg-form-top"><span className="mg-kicker-dot"/><span>ОСТАВИТЬ ЗАЯВКУ</span></div>
             <h3 id="mg-form-title">Получите бесплатный тест</h3>
             <p>Расскажите о своём бизнесе. Подберём подходящий формат привлечения лидов.</p>

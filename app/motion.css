@@ -1,0 +1,166 @@
+/* Motin AI — subtle high-end motion, scoped to home page only. */
+.mg-page .mg-motion-particles {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+  z-index: 0;
+  pointer-events: none;
+  opacity: .8;
+}
+.mg-page .mg-hero-layout,
+.mg-page .mg-metrics { position: relative; z-index: 1; }
+
+/* Soft parallax: image moves within the clipped hero frame only. */
+.mg-motion-on .mg-scene-photo {
+  transform: translate3d(0,var(--mg-photo-shift,0px),0) scale(1.05);
+  will-change: transform;
+}
+.mg-motion-on .mg-hud-top {
+  transform: translate3d(0,var(--mg-hud-shift,0px),0);
+}
+.mg-motion-on .mg-hud-bottom {
+  transform: translate3d(0,calc(var(--mg-hud-shift,0px) * -.5),0);
+}
+.mg-motion-on .mg-scene-radar.radar-1 { animation: mg-orbit 80s linear infinite; }
+.mg-motion-on .mg-scene-radar.radar-2 { animation: mg-orbit 100s linear infinite reverse; }
+.mg-motion-on .mg-scene-radar.radar-3 { animation: mg-orbit 120s linear infinite; }
+.mg-motion-on .mg-hero-glow { animation: mg-glow-breathe 14s ease-in-out infinite alternate; }
+.mg-motion-on .mg-hud-bars i { transform-origin: bottom; animation: mg-hud-wave 7s ease-in-out infinite; }
+.mg-motion-on .mg-hud-bars i:nth-child(2n) { animation-delay: -1.5s; }
+.mg-motion-on .mg-hud-bars i:nth-child(3n) { animation-delay: -3s; }
+
+/* Hero entrance: content never disappears when JS is unavailable. */
+.mg-motion-on .mg-hero-intro { animation: mg-hero-enter 720ms cubic-bezier(.2,.75,.25,1) both; }
+
+/* Progressive-on-scroll cards, using one IntersectionObserver. */
+.mg-motion-on .mg-reveal {
+  opacity: 0;
+  transform: translate3d(0,19px,0);
+  transition: opacity .74s ease, transform .74s cubic-bezier(.18,.74,.3,1);
+}
+.mg-motion-on .mg-reveal.mg-visible {
+  opacity: 1;
+  transform: translate3d(0,0,0);
+}
+.mg-motion-on .mg-process-card:nth-child(2),
+.mg-motion-on .mg-benefit-card:nth-child(2),
+.mg-motion-on .mg-price-card:nth-child(2),
+.mg-motion-on .mg-service:nth-child(2) { transition-delay: 80ms; }
+.mg-motion-on .mg-process-card:nth-child(3),
+.mg-motion-on .mg-benefit-card:nth-child(3),
+.mg-motion-on .mg-price-card:nth-child(3),
+.mg-motion-on .mg-service:nth-child(3) { transition-delay: 155ms; }
+.mg-motion-on .mg-process-card:nth-child(4),
+.mg-motion-on .mg-benefit-card:nth-child(4),
+.mg-motion-on .mg-service:nth-child(4) { transition-delay: 220ms; }
+.mg-motion-on .mg-process-card:nth-child(5),
+.mg-motion-on .mg-benefit-card:nth-child(5) { transition-delay: 275ms; }
+.mg-motion-on .mg-benefit-card:nth-child(6) { transition-delay: 330ms; }
+
+/* Five-step path draws gently between desktop cards as they enter. */
+@media (min-width: 1131px) {
+  .mg-motion-on .mg-process-track { position: relative; isolation: isolate; }
+  .mg-motion-on .mg-process-track::before {
+    content: "";
+    position: absolute;
+    left: 5%;
+    top: 46%;
+    width: 90%;
+    height: 1px;
+    z-index: -1;
+    background: linear-gradient(90deg,rgba(255,193,98,.14),#f5bc69,rgba(255,193,98,.14));
+    transform: scaleX(0);
+    transform-origin: left;
+    animation: mg-path-draw 2.1s ease-out .25s both;
+    animation-play-state: paused;
+  }
+  .mg-motion-on:has(.mg-process-card.mg-visible) .mg-process-track::before { animation-play-state: running; }
+  .mg-motion-on .mg-process-arrow { animation: mg-arrow-float 4.5s ease-in-out infinite; }
+}
+
+/* Spotlight on featured package; soft recurring glint on the key actions. */
+.mg-motion-on .mg-price-featured {
+  animation: mg-featured-glow 8s ease-in-out infinite;
+}
+.mg-motion-on .mg-hero-actions .mg-btn-primary,
+.mg-motion-on .mg-test-panel > .mg-btn-primary {
+  position: relative;
+  overflow: hidden;
+  isolation: isolate;
+}
+.mg-motion-on .mg-hero-actions .mg-btn-primary::after,
+.mg-motion-on .mg-test-panel > .mg-btn-primary::after {
+  content: "";
+  position: absolute;
+  inset: -75% auto -75% -46%;
+  width: 26%;
+  background: linear-gradient(90deg,transparent,rgba(255,255,255,.33),transparent);
+  transform: skewX(-22deg) translateX(-230%);
+  pointer-events: none;
+  animation: mg-button-glint 11s ease-in-out 3s infinite;
+}
+
+/* Gentle active shimmer around the separate AI assistant. */
+.mg-motion-on .mg-ai-orb-inner { animation: mg-ai-halo 9s ease-in-out infinite; }
+
+@keyframes mg-hero-enter {
+  from { opacity: 0; transform: translate3d(0,20px,0); }
+  to { opacity: 1; transform: translate3d(0,0,0); }
+}
+@keyframes mg-orbit { to { transform: rotate(360deg); } }
+@keyframes mg-glow-breathe { from { opacity: .65; } to { opacity: 1; } }
+@keyframes mg-hud-wave { 0%,100% { transform: scaleY(.87); } 50% { transform: scaleY(1.07); } }
+@keyframes mg-path-draw { to { transform: scaleX(1); } }
+@keyframes mg-arrow-float { 0%,100% { opacity: .52; } 50% { opacity: 1; } }
+@keyframes mg-featured-glow {
+  0%,100% { box-shadow: 0 16px 60px rgba(239,151,39,.09), 0 0 0 0 rgba(255,185,80,.07); }
+  50% { box-shadow: 0 20px 62px rgba(239,151,39,.15), 0 0 0 3px rgba(255,185,80,.10); }
+}
+@keyframes mg-button-glint {
+  0%, 68% { transform: skewX(-22deg) translateX(-230%); }
+  83%,100% { transform: skewX(-22deg) translateX(640%); }
+}
+@keyframes mg-ai-halo {
+  0%,100% { box-shadow: 0 0 0 0 rgba(241,160,54,.03); }
+  50% { box-shadow: 0 0 30px 2px rgba(241,160,54,.17); }
+}
+
+@media (max-width: 1024px), (pointer: coarse) {
+  /* Mobile / touch: CSS-only, low-cost effects. No canvas or parallax JS. */
+  .mg-page .mg-motion-particles { display: none; }
+  .mg-motion-on .mg-scene-photo,
+  .mg-motion-on .mg-hud-top,
+  .mg-motion-on .mg-hud-bottom { transform: none; will-change: auto; }
+  .mg-motion-on .mg-scene-radar { animation: none!important; }
+  .mg-motion-on .mg-hero-glow { animation: none; }
+  .mg-motion-on .mg-hud-bars i { animation: none; }
+  .mg-motion-on .mg-process-card:nth-child(n),
+  .mg-motion-on .mg-benefit-card:nth-child(n),
+  .mg-motion-on .mg-service:nth-child(n),
+  .mg-motion-on .mg-price-card:nth-child(n) { transition-delay: 0ms; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .mg-page .mg-motion-particles { display: none!important; }
+  .mg-page .mg-reveal, .mg-page .mg-reveal.mg-visible,
+  .mg-page .mg-hero-intro {
+    opacity: 1!important;
+    transform: none!important;
+    animation: none!important;
+    transition: none!important;
+  }
+  .mg-page .mg-scene-photo,
+  .mg-page .mg-hud-top,
+  .mg-page .mg-hud-bottom,
+  .mg-page .mg-scene-radar,
+  .mg-page .mg-hero-glow,
+  .mg-page .mg-price-featured,
+  .mg-page .mg-hud-bars i,
+  .mg-page .mg-ai-orb-inner,
+  .mg-page .mg-hero-actions .mg-btn-primary::after,
+  .mg-page .mg-test-panel>.mg-btn-primary::after {
+    animation: none!important; transform: none!important;
+  }
+  .mg-page .mg-process-track::before { animation: none!important; transform: scaleX(1)!important; }
+}
