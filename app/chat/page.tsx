@@ -338,7 +338,7 @@ export default function ChatPage() {
           {
             role: "assistant",
             content:
-              data.reply || "Готово — презентация PowerPoint создана и готова к скачиванию.",
+              data.reply || "Готово — я создал презентацию PowerPoint. Она доступна для скачивания.",
             attachments: [generatedPresentation],
           },
         ]);
