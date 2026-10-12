@@ -22,6 +22,9 @@ type Attachment = {
   kind: "image" | "file";
   analyzable: boolean;
   downloadUrl: string;
+  deleteUrl?: string;
+  accessExpires?: number;
+  accessSignature?: string;
   previewUrl?: string;
   generated?: boolean;
   local?: boolean;
@@ -238,9 +241,9 @@ export default function ChatPage() {
       return;
     }
 
-    void fetch(`/api/files/${encodeURIComponent(attachment.id)}`, {
-      method: "DELETE",
-    }).catch(() => undefined);
+    if (attachment.deleteUrl) {
+      void fetch(attachment.deleteUrl, { method: "DELETE" }).catch(() => undefined);
+    }
   }
 
   function reuseImage(attachment: Attachment) {

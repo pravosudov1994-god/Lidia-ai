@@ -710,7 +710,7 @@ body{background:radial-gradient(circle at 75% 5%,rgba(159,121,62,.08),transparen
 .hero-trust{margin-top:32px;font-size:12px;letter-spacing:.02em;color:#8d9ba9;display:flex;align-items:center;gap:11px}
 .signal-dot{width:7px;height:7px;border-radius:50%;background:#e1b977;box-shadow:0 0 13px rgba(226,184,120,.5)}
 .hero-art{height:610px;position:relative;overflow:hidden;border:1px solid rgba(227,193,140,.18);border-radius:3px 3px 100px 3px;background:radial-gradient(circle at 64% 42%,rgba(181,137,71,.27),transparent 46%),linear-gradient(140deg,#142336,#07111f 77%);box-shadow:0 40px 100px rgba(0,0,0,.35)}
-.hero-photo{position:absolute;inset:0;background-image:url("/motin-hero.webp"),url("/motin-hero.svg");background-size:cover;background-position:center;filter:saturate(.77)}
+.hero-photo{position:absolute;inset:0;background-image:url("/motin-hero.svg");background-size:cover;background-position:center;filter:saturate(.77)}
 .hero-art-overlay{position:absolute;inset:0;background:linear-gradient(0deg,rgba(3,9,15,.88),transparent 40%),linear-gradient(90deg,rgba(4,12,20,.24),transparent 65%)}
 .art-topline{position:absolute;top:26px;left:28px;color:#e4cdab;font-size:10px;letter-spacing:.22em;z-index:1}
 .art-orbit{position:absolute;pointer-events:none;border:1px solid rgba(212,175,116,.35);border-radius:50%}
