@@ -2,12 +2,13 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./chat/chat-enhancements.css";
 import "./typography.css";
+import "./leadgen.css";
 
 export const metadata: Metadata = {
   icons: { icon: "/favicon.svg" },
-  title: "Motin AI — интеллектуальный партнёр для бизнеса",
+  title: "Motin AI — целевые лиды для вашего бизнеса",
   description:
-    "Motin AI: стратегии, маркетинг, презентации и лидогенерация Motin Group.",
+    "Motin AI — умная лидогенерация: анализ ниши, привлечение, квалификация колл-центром и передача целевых лидов. Бесплатный тест на 7 дней. Тарифы от 20 лидов.",
 };
 
 export default function RootLayout({
