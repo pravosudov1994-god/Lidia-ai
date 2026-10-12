@@ -39,6 +39,7 @@ const benefits: { title: string; text: string; icon: IconName }[] = [
   { title: "Дополнительный канал", text: "Новый источник клиентов без отказа от уже работающей рекламы.", icon: "chart" },
   { title: "Интеграция и контроль", text: "Передаём обращения в CRM или Excel и делаем обработку прозрачной.", icon: "layers" },
   { title: "Колл-центр", text: "Живая проверка потребности и интереса до передачи лида.", icon: "headset" },
+  { title: "Контроль качества", text: "Проверяем лиды перед передачей в отдел продаж.", icon: "shield" },
 ];
 
 const plans = [
@@ -155,11 +156,7 @@ export default function HomePage() {
               <h3>{b.title}</h3><p>{b.text}</p>
             </article>)}
           </div>
-          <div className="mg-quality">
-            <span className="mg-quality-symbol"><Icon name="shield" size={34}/></span>
-            <div><strong>Контроль качества на каждом этапе</strong><p>Проверяем выдачу лидов и стандарты квалификации перед передачей в ваш отдел продаж.</p></div>
-            <div className="mg-quality-lines" aria-hidden="true"><i/><i/><i/><i/><i/></div>
-          </div>
+
         </div>
       </section>
 
