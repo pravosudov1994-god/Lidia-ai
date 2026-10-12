@@ -1,0 +1,18 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 800 1000" width="800" height="1000" role="img" aria-label="Стилизованный мужской образ Motin AI">
+<defs><radialGradient id="bg"><stop stop-color="#283b50"/><stop offset="1" stop-color="#07101b"/></radialGradient><linearGradient id="suit" x2="1" y2="1"><stop stop-color="#253449"/><stop offset=".5" stop-color="#0a121e"/><stop offset="1" stop-color="#15293a"/></linearGradient><linearGradient id="skin" x2="1" y2="1"><stop stop-color="#d2a983"/><stop offset=".53" stop-color="#8e6248"/><stop offset="1" stop-color="#53382d"/></linearGradient><linearGradient id="gold" x2="1" y2="1"><stop stop-color="#efd0a0"/><stop offset="1" stop-color="#8e673e"/></linearGradient><filter id="blur"><feGaussianBlur stdDeviation="45"/></filter></defs>
+<rect width="800" height="1000" fill="url(#bg)"/><circle cx="635" cy="280" r="290" fill="#85673f" opacity=".25" filter="url(#blur)"/>
+<g opacity=".3" fill="none" stroke="#9a805c"><circle cx="560" cy="440" r="330"/><circle cx="560" cy="440" r="410"/><circle cx="560" cy="440" r="500"/></g>
+<path d="M45 1000 C92 800 280 698 413 706 C596 699 735 760 800 1000Z" fill="url(#suit)" stroke="#9c835e" stroke-opacity=".3" stroke-width="3"/>
+<path d="M316 710 L396 830 L350 1000 L189 1000 L230 800Z" fill="#102134"/><path d="M510 710 L427 830 L475 1000 L685 1000 L610 806Z" fill="#111d2d"/>
+<path d="M381 690 L372 781 L429 849 L487 773 L476 681Z" fill="url(#skin)"/><path d="M374 768 L430 845 L483 763 L465 947 L389 947Z" fill="#e8e0ce" opacity=".9"/>
+<path d="M455 849 L435 988 L411 988 L416 849Z" fill="#a48961"/>
+<path d="M298 348 C299 252 374 182 483 192 C596 202 630 299 611 414 L588 566 C561 671 496 733 431 726 C354 716 311 645 292 550Z" fill="url(#skin)"/>
+<path d="M291 411 C276 320 293 217 390 176 C478 127 607 161 640 260 C653 312 633 380 601 414 L592 319 C545 334 499 302 464 286 C413 350 369 330 312 385 L312 482Z" fill="#0d1118"/>
+<path d="M294 414 Q259 396 260 453 Q261 528 305 544 M609 411 Q657 405 648 462 Q640 529 598 542" fill="url(#skin)"/>
+<path d="M349 460 Q384 438 416 458 M482 458 Q517 438 553 461" fill="none" stroke="#231f21" stroke-width="12" stroke-linecap="round"/>
+<path d="M355 483 Q385 497 415 481 M485 481 Q516 499 546 480" fill="none" stroke="#171c21" stroke-width="9" stroke-linecap="round"/>
+<path d="M441 490 L426 580 Q441 599 470 585" fill="none" stroke="#654637" stroke-width="9" opacity=".65"/>
+<path d="M387 629 Q435 646 495 620" fill="none" stroke="#4c322c" stroke-width="9" stroke-linecap="round"/>
+<path d="M336 566 Q345 655 430 701 Q540 691 581 562" fill="none" stroke="#251b1b" stroke-width="18" opacity=".22"/>
+<g fill="none" stroke="url(#gold)" stroke-width="2" opacity=".55"><path d="M70 900 H235 L304 839"/><path d="M545 180 H720 L769 140"/><path d="M645 610 H780"/></g><g fill="#e0b477"><circle cx="70" cy="900" r="4"/><circle cx="769" cy="140" r="4"/><circle cx="645" cy="610" r="4"/></g>
+</svg>
