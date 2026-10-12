@@ -43,9 +43,9 @@ const benefits: { title: string; text: string; icon: IconName }[] = [
 ];
 
 const plans = [
-  { count: 20, price: "40 000 ₽", type: "СТАРТ", featured: false },
-  { count: 40, price: "60 000 ₽", type: "РОСТ", featured: true },
-  { count: 80, price: "100 000 ₽", type: "МАСШТАБ", featured: false },
+  { count: 20, price: "50 000 ₽", type: "СТАРТ", featured: false },
+  { count: 40, price: "70 000 ₽", type: "РОСТ", featured: true },
+  { count: 80, price: "120 000 ₽", type: "МАСШТАБ", featured: false },
 ];
 
 const services: { title: string; text: string; icon: IconName }[] = [
